@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Butter Yellow Squircle Canvas -->
+  <rect width="64" height="64" rx="18" fill="#FFFDB6" stroke="#470E0B" stroke-width="2.5"/>
+  
+  <!-- Smooth Fluid Outer Lens Ring -->
+  <circle cx="32" cy="32" r="24" stroke="#470E0B" stroke-width="1.8" stroke-dasharray="4 2" opacity="0.4"/>
+  <circle cx="32" cy="32" r="20" stroke="#470E0B" stroke-width="2.5"/>
+  
+  <!-- Minimalist Camera Aperture Iris Curved Blades -->
+  <path d="M32 12 C36 20, 44 24, 48 28" stroke="#470E0B" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M52 32 C44 36, 40 44, 36 48" stroke="#470E0B" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M32 52 C28 44, 20 40, 16 36" stroke="#470E0B" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M12 32 C20 28, 24 20, 28 16" stroke="#470E0B" stroke-width="2.2" stroke-linecap="round"/>
+  
+  <!-- Kinetic Prism Trajectory -->
+  <line x1="18" y1="46" x2="46" y2="18" stroke="#FF8B71" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Central Floating Focal Core -->
+  <circle cx="32" cy="32" r="4.2" fill="#470E0B"/>
+  <circle cx="32" cy="32" r="1.8" fill="#FFFDB6"/>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="warmBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8B71" />
+      <stop offset="50%" stop-color="#E9D5FF" />
+      <stop offset="100%" stop-color="#FFFDB6" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#470E0B" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  
+  <rect width="400" height="500" fill="url(#warmBg)" />
+  
+  <!-- Playful Decorative 3D Spheres / Organic Shapes -->
+  <circle cx="90" cy="90" r="50" fill="#FFFDE8" opacity="0.6" />
+  <circle cx="330" cy="140" r="40" fill="#FF8B71" opacity="0.8" />
+  <circle cx="80" cy="390" r="60" fill="#A7F3D0" opacity="0.7" />
+  
+  <!-- Stylized Character Silhouette / Avatar -->
+  <g transform="translate(200, 260)" filter="url(#shadow)">
+    <!-- Body -->
+    <path d="M-90,160 C-90,80 -50,60 0,60 C50,60 90,80 90,160 Z" fill="#470E0B" />
+    
+    <!-- Neck -->
+    <rect x="-24" y="10" width="48" height="60" rx="10" fill="#FFC9A9" />
+    
+    <!-- Head -->
+    <circle cx="0" cy="-20" r="65" fill="#FFC9A9" />
+    
+    <!-- Hair / Creative Cap -->
+    <path d="M-68,-25 C-65,-85 65,-85 68,-25 C50,-60 -50,-60 -68,-25 Z" fill="#470E0B" />
+    <circle cx="-60" cy="-15" r="16" fill="#470E0B" />
+    <circle cx="60" cy="-15" r="16" fill="#470E0B" />
+    
+    <!-- Glasses / Creative Technologist Eyewear -->
+    <rect x="-50" y="-30" width="40" height="26" rx="8" fill="none" stroke="#470E0B" stroke-width="6" />
+    <rect x="10" y="-30" width="40" height="26" rx="8" fill="none" stroke="#470E0B" stroke-width="6" />
+    <line x1="-10" y1="-18" x2="10" y2="-18" stroke="#470E0B" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Smile -->
+    <path d="M-18,12 Q0,26 18,12" fill="none" stroke="#470E0B" stroke-width="5" stroke-linecap="round" />
+  </g>
+
+  <!-- Floating Badge -->
+  <rect x="100" y="420" width="200" height="42" rx="21" fill="#FFFFFF" stroke="#470E0B" stroke-width="2" />
+  <text x="200" y="446" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#470E0B" text-anchor="middle">
+    AMYRATH · CREATIVE TECH
+  </text>
+</svg>
