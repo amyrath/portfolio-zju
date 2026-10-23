@@ -43,7 +43,7 @@ export interface TranslationContent {
     programBadge: string;
     nameBadgePrompt: string;
     nameBadgeActive: string;
-    titleWords: { text: string; isAccent?: boolean }[];
+    titleWords: { text: string; isAccent?: boolean; isPeach?: boolean }[];
     subtitle: string;
     intro: string;
     ctaVideos: string;
@@ -61,6 +61,7 @@ export interface TranslationContent {
       backRole: string;
     };
   };
+  ticker: string[];
   videos: {
     kicker: string;
     title: string;
@@ -100,18 +101,21 @@ export interface TranslationContent {
     role: string;
     description: string;
     actionsHeading: string;
-    actions: string[];
-    button: string;
+    actions: {
+      title: string;
+      description: string;
+    }[];
+    galleryHeading: string;
+    galleryTitle: string;
+    gallerySubtitle: string;
+    photos: {
+      id: string;
+      label: string;
+      fileName: string;
+      imageSrc: string;
+      alt: string;
+    }[];
     badgeText: string;
-    modal: {
-      orgHeader: string;
-      certTitle: string;
-      awardedTo: string;
-      recipientRole: string;
-      workshopIntro: string;
-      verificationTag: string;
-      closeBtn: string;
-    };
   };
   studyPlan: {
     tag: string;
@@ -142,9 +146,15 @@ export interface TranslationContent {
     userPrompt: string;
     interactiveMode: string;
     shortcutsLabel: string;
+    shortcutsList: string[];
     welcomeTitle: string;
     welcomeMsg: string;
     unknownCmd: string;
+    availableCmdsHeading: string;
+    availableCmdsList: {
+      cmd: string;
+      desc: string;
+    }[];
     hobbiesTitle: string;
     hobbiesList: {
       title: string;
@@ -155,6 +165,9 @@ export interface TranslationContent {
     videosTitle: string;
     contactTitle: string;
     studyPlanSummaryTitle: string;
+    afrikedutechTitle: string;
+    afrikedutechRoleLabel: string;
+    exploreEngagementBtn: string;
     cvTitle: string;
     cvPillars: { label: string; text: string }[];
     cvDownloadLabel: string;
@@ -178,12 +191,12 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       personalEmailLabel: 'Personal Email',
       academicEmail: 'amyrath.chakran@epitech.eu',
       academicEmailLabel: 'Academic Email',
-      emailNote: 'Available on both addresses for all academic correspondence.',
+      emailNote: 'Available on both addresses for all academic or professional correspondence.',
       copyEmail: 'Copy',
       emailCopied: 'Copied!',
-      linkedIn: 'linkedin.com/in/amyrath',
-      linkedInUrl: 'https://linkedin.com/in/amyrath',
-      linkedInLabel: 'Professional LinkedIn Profile',
+      linkedIn: 'linkedin.com/in/amyrath-chakran',
+      linkedInUrl: 'https://www.linkedin.com/in/amyrath-chakran',
+      linkedInLabel: 'Official LinkedIn Profile',
       linkedInAction: 'Open Profile',
       whatsApp: '+229 01 57 39 87 33',
       whatsAppUrl: 'https://wa.me/2290157398733',
@@ -215,9 +228,9 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       nameBadgeActive: 'Back side active',
       titleWords: [
         { text: 'Creative' },
-        { text: 'Technologist' },
+        { text: 'Technologist', isPeach: true },
         { text: '&' },
-        { text: 'Visual', isAccent: true }, // ONLY this word receives purple accent!
+        { text: 'Visual', isAccent: true },
         { text: 'Architect' },
       ],
       subtitle: 'Bridging Generative AI, Visual Storytelling & Human Interaction.',
@@ -229,7 +242,7 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       badges: {
         artDirection: 'Art Direction & AI',
         impactFilm: 'Impact Filmmaking',
-        afrikedutech: 'AFRIKEDUTECH',
+        afrikedutech: 'AFRIKEDUTECH · Tech Trainer',
       },
       photo: {
         frontRole: 'Creative Technologist',
@@ -238,11 +251,20 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
         backRole: 'Visual Storytelling',
       },
     },
+    ticker: [
+      'CREATIVE TECHNOLOGIST',
+      'VISUAL ARCHITECT',
+      'GENERATIVE AI & FILMMAKING',
+      'CIVICLENS · ZHEJIANG UNIVERSITY',
+      'TECH TRAINER · AFRIKEDUTECH',
+      'HUMAN-CENTERED DESIGN',
+      'MULTIMODAL AI & STORYTELLING',
+    ],
     videos: {
       kicker: 'CINEMATOGRAPHIC WORKS & SCREENINGS',
       title: 'Screening Windows',
       description:
-        'Two real audiovisual initiatives: reclaiming cultural heritage through generative AI and civic mobilization through live-action cinema.',
+        'Two authentic audiovisual initiatives: reclaiming cultural heritage through generative AI and civic mobilization through live-action cinema.',
       exactRoleLabel: 'Exact Role :',
       project1: {
         number: 'Project 01',
@@ -274,29 +296,54 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       },
     },
     afrikedutech: {
-      tag: 'DIGITAL INCLUSION & SOCIAL INNOVATION',
-      title: 'Technology Transmission & Digital Literacy : AFRIKEDUTECH',
+      tag: 'DIGITAL INCLUSION & FIELD TECH TRAINING',
+      title: 'Technology Transmission & Educational Robotics : AFRIKEDUTECH',
       organization: 'AFRIKEDUTECH (Digital Inclusion & Social Innovation Organization in Benin)',
-      role: 'Volunteer Trainer in Digital Inclusion & Technologies',
+      role: 'Volunteer Tech Trainer · Educational Robotics & Digital Tools',
       description:
-        'Facilitating practical workshops open to rural youth and local communities to foster digital empowerment and equal access to technological opportunities.',
+        'Hands-on field workshops delivered to youth and rural communities across Benin. Our mission: breaking technological barriers through practical robotics education, computer literacy, and AI discovery.',
       actionsHeading: 'Concrete Field Actions & Workshops :',
       actions: [
-        'Web research and digital tools initiation for rural youth.',
-        'Practical discovery of administrative public e-services.',
-        'Hands-on robotics and introductory AI workshops.',
+        {
+          title: 'Educational Robotics & Prototyping',
+          description: 'Hands-on assembly, microcontroller programming, and algorithmic problem-solving workshops for youth.',
+        },
+        {
+          title: 'Computer Literacy & E-Services',
+          description: 'Practical introduction to computer fundamentals, web research, and access to public online administrative services.',
+        },
+        {
+          title: 'AI Demystification & Tech Horizons',
+          description: 'Introducing emergent technologies and practical digital opportunities tailored to local community contexts.',
+        },
       ],
-      button: 'View Official Certificate',
-      badgeText: 'Official Volunteer Certificate',
-      modal: {
-        orgHeader: 'SOCIAL INNOVATION ORGANIZATION FOR DIGITAL INCLUSION IN BENIN',
-        certTitle: 'Official Certificate of Volunteer Engagement',
-        awardedTo: 'Awarded in full recognition to :',
-        recipientRole: 'Volunteer Trainer in Digital Inclusion & Technologies',
-        workshopIntro: 'Hands-on workshops delivered to youth and rural communities :',
-        verificationTag: 'Official Certificate Verified & Validated',
-        closeBtn: 'Close',
-      },
+      galleryHeading: 'FIELD GALLERY',
+      galleryTitle: 'Field Immersion & AFRIKEDUTECH Workshops',
+      gallerySubtitle: 'Moments of hands-on training, digital inclusion, and community empowerment with youth in rural Benin.',
+      photos: [
+        {
+          id: 'terrain-1',
+          label: '',
+          fileName: 'photo-terrain-1.jpg',
+          imageSrc: '/photo-terrain-1.jpg',
+          alt: 'Educational robotics and digital literacy workshop with youth',
+        },
+        {
+          id: 'terrain-2',
+          label: '',
+          fileName: 'photo-terrain-2.jpg',
+          imageSrc: '/photo-terrain-2.jpg',
+          alt: 'Hands-on learning session with educational robotics kits',
+        },
+        {
+          id: 'terrain-3',
+          label: '',
+          fileName: 'photo-terrain-3.jpg',
+          imageSrc: '/photo-terrain-3.jpg',
+          alt: 'Digital empowerment and community technology transmission',
+        },
+      ],
+      badgeText: 'Tech Trainer Experience',
     },
     studyPlan: {
       tag: "STUDY PLAN · MASTER'S RESEARCH PROPOSAL",
@@ -348,43 +395,51 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
     terminal: {
       kicker: 'INTERACTIVE CREATIVE CONSOLE',
       title: 'Studio Terminal',
-      description: 'Explore my profile, video projects, real passions, and research study plan in an interactive shell.',
+      description: 'Explore my profile, video projects, authentic passions, and research study plan in an interactive shell.',
       userPrompt: 'amyrath@studio-terminal:~$',
       interactiveMode: 'Interactive Mode',
       shortcutsLabel: 'Shortcuts :',
+      shortcutsList: ['cv', 'hobbies', 'videos', 'study-plan', 'afrikedutech', 'contact', 'help', 'clear'],
       welcomeTitle: 'Studio Terminal · Amyrath CHAKRAN Folabi',
       welcomeMsg:
-        'Welcome to the interactive console. Use the shortcut buttons above or type commands (e.g., hobbies, videos, study-plan, contact).',
+        'Welcome to the interactive console. Use the shortcut buttons above or type commands (e.g., hobbies, videos, study-plan, afrikedutech, contact).',
       unknownCmd: 'Unrecognized command. Type "help" to see available options.',
-      hobbiesTitle: 'REAL PASSIONS & BACKGROUND :',
+      availableCmdsHeading: 'Available Commands :',
+      availableCmdsList: [
+        { cmd: 'cv', desc: 'Academic resume summary & interactive PDF viewer' },
+        { cmd: 'hobbies', desc: 'Authentic passions (Directing, Speed skating & Long-distance running, Dance)' },
+        { cmd: 'videos', desc: 'Two video projects with direct screening links' },
+        { cmd: 'study-plan', desc: 'ZJU Master proposal (CivicLens, Linguistic diversity)' },
+        { cmd: 'afrikedutech', desc: 'Community robotics & digital empowerment workshops' },
+        { cmd: 'contact', desc: 'Direct emails (Gmail, Epitech), LinkedIn & WhatsApp' },
+        { cmd: 'clear', desc: 'Clear console screen' },
+      ],
+      hobbiesTitle: 'AUTHENTIC PASSIONS & BACKGROUND :',
       hobbiesList: [
         {
           title: '1. Cinematographic Directing & Camera Framing',
           desc: 'Passion for visual composition, natural lighting, editing rhythm, and narrative through pure imagery.',
         },
         {
-          title: '2. Social Engagement & Technology Transmission',
-          desc: 'Volunteer Trainer at AFRIKEDUTECH: spreading digital literacy, public e-services, and AI to rural communities.',
-          linkText: 'View official AFRIKEDUTECH certificate ↗',
-          linkHref: '#engagement',
+          title: '2. Sports: Speed Roller Skating & Long-Distance Running',
+          desc: 'Former semi-pro speed roller skating competitor and long-distance runner: athletic rigor, mental stamina, discipline, and endurance.',
         },
         {
-          title: '3. Sports: Speed Roller Skating Athlete',
-          desc: 'Former semi-pro athlete and speed roller skating competitor: athletic rigor, endurance, discipline, and perseverance.',
-        },
-        {
-          title: '4. Dance & Musical Exploration',
+          title: '3. Dance & Musical Exploration',
           desc: 'Dance practice, exploration of polyrhythms, and sensitivity to acoustic textures applied to audiovisual storytelling.',
         },
       ],
       videosTitle: 'THE TWO VIDEO WORKS (CLICKABLE LINKS) :',
       contactTitle: 'CANDIDATE DIRECT CONTACT DETAILS :',
       studyPlanSummaryTitle: 'CivicLens Research Overview :',
+      afrikedutechTitle: 'EDUCATIONAL ROBOTICS & DIGITAL EMPOWERMENT :',
+      afrikedutechRoleLabel: 'Role :',
+      exploreEngagementBtn: 'Explore field workshops ↗',
       cvTitle: 'CURRICULUM VITAE (CV / RESUME) :',
       cvPillars: [
         { label: '1. Education', text: 'Epitech Bénin (Bachelor IT Expertise, Tek 3).' },
         { label: '2. Filmmaking & Creation', text: 'AI Art Direction & Independent Audiovisual Production.' },
-        { label: '3. Social Engagement', text: 'AFRIKEDUTECH (Digital Inclusion in Rural Communities).' },
+        { label: '3. Social Engagement', text: 'AFRIKEDUTECH (Tech Trainer in Rural Communities).' },
       ],
       cvDownloadLabel: '[ Open PDF Document ↗ ]',
     },
@@ -397,26 +452,26 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
   },
   fr: {
     meta: {
-      title: "Amyrath CHAKRAN Folabi · Creative Technologist & Visual Storyteller",
+      title: "Amyrath CHAKRAN Folabi · Spécialiste en Technologie Créative & Visual Storyteller",
       description:
-        "Portfolio & Study Plan de recherche d'Amyrath CHAKRAN Folabi pour le Master's Degree in Communication and Media à l'Université de Zhejiang (College of Media and International Culture).",
+        "Portfolio et projet de recherche d’Amyrath CHAKRAN Folabi pour le Master en Communication et Médias de l’Université de Zhejiang (College of Media and International Culture).",
     },
     contactChannels: {
       personalEmail: 'amyrathc@gmail.com',
       personalEmailLabel: 'Email personnel',
       academicEmail: 'amyrath.chakran@epitech.eu',
       academicEmailLabel: 'Email académique',
-      emailNote: 'Disponible sur les deux adresses pour toute correspondance académique.',
+      emailNote: 'Joignable sur ces deux adresses pour toute correspondance académique ou professionnelle.',
       copyEmail: 'Copier',
       emailCopied: 'Copié !',
-      linkedIn: 'linkedin.com/in/amyrath',
-      linkedInUrl: 'https://linkedin.com/in/amyrath',
-      linkedInLabel: 'Profil Professionnel LinkedIn',
-      linkedInAction: 'Ouvrir le profil',
+      linkedIn: 'linkedin.com/in/amyrath-chakran',
+      linkedInUrl: 'https://www.linkedin.com/in/amyrath-chakran',
+      linkedInLabel: 'Profil LinkedIn Officiel',
+      linkedInAction: 'Consulter le profil',
       whatsApp: '+229 01 57 39 87 33',
       whatsAppUrl: 'https://wa.me/2290157398733',
-      whatsAppLabel: 'Ligne WhatsApp Directe',
-      whatsAppAction: 'Discuter sur WhatsApp',
+      whatsAppLabel: 'Ligne WhatsApp',
+      whatsAppAction: 'Échanger sur WhatsApp',
     },
     navbar: {
       brandSubtitle: 'ZJU · MASTER EN COMMUNICATION & MÉDIAS',
@@ -432,55 +487,66 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       themeToggleTitle: 'Basculer Mode Jour / Mode Nuit',
     },
     contactModal: {
-      kicker: 'COMMUNICATION DIRECTE',
-      title: 'Échanger avec Amyrath',
+      kicker: 'CONTACT DIRECT',
+      title: 'Entrer en contact avec Amyrath',
       subtitle: "Master en Communication & Médias · Université de Zhejiang (College of Media and International Culture)",
       close: 'Fermer',
     },
     hero: {
       programBadge: "Master en Communication & Médias · Université de Zhejiang (College of Media and International Culture)",
-      nameBadgePrompt: 'Cliquer pour pivoter la photo',
+      nameBadgePrompt: 'Cliquer pour retourner la photo',
       nameBadgeActive: 'Verso actif',
       titleWords: [
-        { text: 'Creative' },
-        { text: 'Technologist' },
+        { text: 'Spécialiste' },
+        { text: 'en' },
+        { text: 'Technologie', isPeach: true },
+        { text: 'Créative' },
         { text: '&' },
-        { text: 'Visual', isAccent: true }, // UNIQUEMENT ce mot en violet !
-        { text: 'Architect' },
+        { text: 'Architecte' },
+        { text: 'Visuelle', isAccent: true },
       ],
-      subtitle: "À l'intersection de l'IA Générative, du récit cinématographique et de l'interaction humaine.",
+      subtitle: "À la croisée de l’intelligence artificielle générative, de l’écriture visuelle et de l’expérience humaine.",
       intro:
-        'Explorer les intersections entre réalisation cinématographique, intelligence artificielle multimodale et design civique pour l’accessibilité universelle de l’information.',
+        'Développer des passerelles concrètes entre réalisation cinématographique, intelligence artificielle multimodale et design civique pour rendre l’information accessible à tous.',
       ctaVideos: 'Voir les Réalisations Vidéo',
       ctaStudyPlan: 'Study Plan ZJU',
       ctaCv: 'Consulter le CV (PDF)',
       badges: {
         artDirection: 'Direction Artistique & IA',
-        impactFilm: 'Réalisation d’Impact',
-        afrikedutech: 'AFRIKEDUTECH',
+        impactFilm: 'Cinéma d’Impact',
+        afrikedutech: 'AFRIKEDUTECH · Formatrice Tech',
       },
       photo: {
-        frontRole: 'Creative Technologist',
-        frontHint: 'Cliquer pour pivoter en 3D',
-        backTitle: 'Direction & Cadrage',
-        backRole: 'Storytelling Visuel',
+        frontRole: 'Spécialiste en Technologie Créative',
+        frontHint: 'Cliquer pour retourner en 3D',
+        backTitle: 'Réalisation & Cadrage',
+        backRole: 'Récit Visuel',
       },
     },
+    ticker: [
+      'SPÉCIALISTE EN TECHNOLOGIE CRÉATIVE',
+      'ARCHITECTE VISUELLE',
+      'IA GÉNÉRATIVE & RÉALISATION',
+      'CIVICLENS · UNIVERSITÉ DE ZHEJIANG',
+      'FORMATRICE TECH · AFRIKEDUTECH',
+      'DESIGN CIVIQUE & ACCESSIBILITÉ',
+      'ROBOTIQUE & INCLUSION NUMÉRIQUE',
+    ],
     videos: {
-      kicker: 'RÉALISATIONS CINÉMATOGRAPHIQUES & PROJECTIONS',
+      kicker: 'PROJECTIONS & CRÉATIONS AUDIOVISUELLES',
       title: 'Fenêtres de Projection',
       description:
-        'Deux démarches audiovisuelles réelles : la réappropriation du patrimoine par l’IA générative et l’engagement citoyen par le cinéma réel.',
-      exactRoleLabel: 'Mon rôle exact :',
+        'Deux démarches audiovisuelles concrètes : la réappropriation du patrimoine précolonial par l’IA générative et l’engagement citoyen par la prise de vue réelle.',
+      exactRoleLabel: 'Rôle précis :',
       project1: {
         number: 'Projet 01',
-        tag: 'IA & Direction Artistique',
+        tag: 'IA Générative & Patrimoine',
         title: '"DANXOMÈ, le ventre du serpent"',
         organization: 'Hub Epitech & Amyrath CHAKRAN',
-        category: 'Génération visuelle & Direction Artistique IA',
-        role: 'Réalisé avec le Hub Epitech · Génération visuelle & Direction Artistique IA (Higgsfield AI)',
+        category: 'Génération visuelle & Direction artistique IA',
+        role: 'Projet mené avec le Hub Epitech · Direction artistique IA & génération visuelle (Higgsfield AI)',
         description:
-          'Court-métrage historique généré par IA retraçant l’épopée précoloniale et la résistance royale. Réalisé avec le Hub Epitech : direction artistique complète, conception des prompts et génération intégrale des rushs visuels.',
+          'Court-métrage historique généré par IA retraçant l’épopée précoloniale et la résistance royale. Réalisé avec le Hub Epitech : direction artistique complète, élaboration des prompts et génération intégrale des rushs visuels.',
         badges: ['"DANXOMÈ"', 'Hub Epitech', 'Direction Artistique IA', 'Higgsfield AI'],
         button: 'Visionner sur Facebook ↗',
         facebookUrl: 'https://www.facebook.com/share/v/1B2aiY5Hwa/',
@@ -492,9 +558,9 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
         title: '"À tous les hommes" (To all men)',
         organization: 'Production Cinématographique Indépendante',
         category: 'Court-métrage de sensibilisation · Prise de vue réelle',
-        role: 'Court-métrage de sensibilisation contre les agressions et le harcèlement de rue · Prise de vue réelle, écriture, cadrage et montage',
+        role: 'Court-métrage engagé contre le harcèlement de rue · Prise de vue réelle, écriture, cadrage et montage',
         description:
-          'Court-métrage de sensibilisation engagé contre les agressions et le harcèlement de rue. Réalisation en prise de vue réelle : écriture du scénario, tournage, cadrage caméra et montage final sans IA.',
+          'Court-métrage de sensibilisation contre les agressions et le harcèlement dans l’espace public. Réalisation intégrale en prise de vue réelle avec des comédiens : écriture du scénario, tournage, cadrage caméra et montage final sans IA.',
         badges: ['Prise de Vue Réelle', 'Sensibilisation', 'Écriture & Scénario', 'Cadrage & Montage'],
         button: 'Visionner sur YouTube ↗',
         youtubeId: 'o5ITNClGOsA',
@@ -502,29 +568,54 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       },
     },
     afrikedutech: {
-      tag: 'INCLUSION NUMÉRIQUE & INNOVATION SOCIALE',
-      title: 'Formation & Inclusion Numérique : AFRIKEDUTECH',
+      tag: 'INCLUSION NUMÉRIQUE & FORMATION DE TERRAIN',
+      title: 'Transmission Technologique & Robotique : AFRIKEDUTECH',
       organization: 'AFRIKEDUTECH (Organisation d’innovation sociale pour l’inclusion numérique au Bénin)',
-      role: 'Formatrice bénévole en inclusion numérique & technologies',
+      role: 'Formatrice Tech bénévole · Robotique éducative & Outils numériques',
       description:
-        'Animation d’ateliers pratiques ouverts à l’ensemble des jeunes et communautés des zones rurales pour favoriser l’autonomie numérique et l’accès équitable aux opportunités technologiques.',
-      actionsHeading: 'Actions concrètes menées sur le terrain :',
+        'Animation d’ateliers pratiques de terrain auprès des jeunes et des communautés rurales au Bénin. Notre mission : décloisonner l’accès à la technologie par l’apprentissage concret de la robotique, l’usage autonome des outils numériques et la découverte des opportunités de l’intelligence artificielle.',
+      actionsHeading: 'Actions & Ateliers de Formation de Terrain :',
       actions: [
-        'Initiation aux outils informatiques et à la recherche documentaire sur le web.',
-        'Découverte des services publics et démarches administratives en ligne.',
-        'Ateliers pratiques de robotique éducative et d’initiation à l’IA.',
+        {
+          title: 'Robotique Éducative & Prototypage',
+          description: 'Ateliers pratiques d’assemblage, programmation de micro-contrôleurs et logique algorithmique avec les jeunes.',
+        },
+        {
+          title: 'Outils Informatiques & E-Services',
+          description: 'Initiation à la navigation web, recherche documentaire et appropriation des démarches administratives en ligne.',
+        },
+        {
+          title: 'Démystification de l’IA & Perspectives Tech',
+          description: 'Sensibilisation aux technologies émergentes et opportunités numériques adaptées aux réalités locales.',
+        },
       ],
-      button: 'Consulter le certificat officiel',
-      badgeText: 'Attestation officielle d’engagement',
-      modal: {
-        orgHeader: 'ORGANISATION D’INNOVATION SOCIALE POUR L’INCLUSION NUMÉRIQUE AU BÉNIN',
-        certTitle: 'Certificat Officiel d’Engagement Bénévole',
-        awardedTo: 'Décerné en bonne et due forme à :',
-        recipientRole: 'Formatrice bénévole en inclusion numérique & technologies',
-        workshopIntro: 'Ateliers pratiques animés auprès des jeunes et communautés des zones rurales :',
-        verificationTag: 'Attestation officielle vérifiée & validée',
-        closeBtn: 'Fermer',
-      },
+      galleryHeading: 'GALERIE DE TERRAIN',
+      galleryTitle: 'Immersion & Ateliers AFRIKEDUTECH',
+      gallerySubtitle: 'Moments d’échange, de formation pratique et d’initiation technologique auprès des communautés et des jeunes au Bénin.',
+      photos: [
+        {
+          id: 'terrain-1',
+          label: '',
+          fileName: 'photo-terrain-1.jpg',
+          imageSrc: '/photo-terrain-1.jpg',
+          alt: 'Atelier d’initiation à la robotique et aux technologies numériques',
+        },
+        {
+          id: 'terrain-2',
+          label: '',
+          fileName: 'photo-terrain-2.jpg',
+          imageSrc: '/photo-terrain-2.jpg',
+          alt: 'Session pratique avec les kits de robotique et les jeunes',
+        },
+        {
+          id: 'terrain-3',
+          label: '',
+          fileName: 'photo-terrain-3.jpg',
+          imageSrc: '/photo-terrain-3.jpg',
+          alt: 'Inclusion numérique et transmission technologique de terrain',
+        },
+      ],
+      badgeText: 'Expérience Formatrice Tech',
     },
     studyPlan: {
       tag: 'STUDY PLAN · PROPOSITION DE RECHERCHE MASTER',
@@ -532,17 +623,17 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
       officialTitleLabel: 'Titre Officiel du Projet de Recherche Master :',
       officialTitle: 'CivicLens: Accessible Visual Media & Multilingual Information Systems',
       program: 'Master en Communication & Médias · Université de Zhejiang (College of Media and International Culture)',
-      themeLabel: 'Sujet de recherche & Diversité Linguistique',
+      themeLabel: 'Sujet de Recherche & Diversité Linguistique',
       theme:
-        'Accessibilité de l’information civique par des interfaces visuelles et sonores adaptées à la diversité linguistique du Bénin (Français, dialectes et langues nationales : Fon, Yoruba/Nago, etc.).',
+        'Accessibilité de l’information civique par des interfaces visuelles et sonores adaptées à la diversité linguistique du Bénin (Français, langues nationales : Fon, Yoruba/Nago, et dialectes locaux).',
       problemLabel: 'Le Constat',
       problemTitle: 'L’Inaccessibilité des Textes Juridiques & Civiques',
       problemDesc:
-        'La complexité des textes de loi et les disparités d\'alphabétisation privent une large partie des citoyens d\'Afrique de l\'Ouest de la compréhension de leurs droits.',
+        'La complexité formelle des textes de loi et les disparités d’alphabétisation privent une large partie des citoyens d’Afrique de l’Ouest de la compréhension effective de leurs droits fondamentaux.',
       approachLabel: 'La Démarche',
       approachTitle: 'Interfaces Visuelles & Audio Multilingue',
       approachDesc:
-        'Traduire l\'information civique en signalétique visuelle universelle et en micro-médias audio adaptés aux langues nationales (Fon, Yoruba/Nago, Français).',
+        'Traduire l’information civique en signalétique visuelle universelle et en micro-médias sonores adaptés aux langues nationales (Fon, Yoruba/Nago, Français).',
       axesHeading: 'Les Quatre Axes de Recherche',
       axesSubtitle:
         'Sémiotique visuelle, audio multilingue en langues nationales, micro-médias mobiles et réception cognitive.',
@@ -551,7 +642,7 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
           number: '01',
           title: 'Sémiotique Visuelle & Symboles Universels',
           description:
-            'Création d’un répertoire visuel intuitif facilitant l’appropriation des concepts civiques sans prérequis de lecture formelle.',
+            'Conception d’un répertoire visuel intuitif facilitant l’appropriation des concepts civiques sans prérequis de lecture formelle.',
         },
         {
           number: '02',
@@ -563,62 +654,70 @@ export const TRANSLATIONS: Record<'en' | 'fr', TranslationContent> = {
           number: '03',
           title: 'Micro-Médias Mobiles pour Canaux Sociaux',
           description:
-            'Formats visuels légers et modulaires, optimisés pour la consultation sur smartphone et le partage communautaire (WhatsApp).',
+            'Création de formats visuels légers et modulaires, optimisés pour la consultation sur smartphone et le partage communautaire (WhatsApp).',
         },
         {
           number: '04',
           title: 'Clarté Cognitive & Mesure de Réception',
           description:
-            'Mesure de l’impact réel et de l’intelligibilité des contenus auprès des communautés ciblées.',
+            'Évaluation de l’impact concret et du niveau de compréhension des contenus auprès des communautés ciblées.',
         },
       ],
     },
     terminal: {
       kicker: 'CONSOLE CRÉATIVE INTERACTIVE',
       title: 'Studio Terminal',
-      description: 'Explorez le parcours, les réalisations vidéo, les passions et le Study Plan dans un terminal interactif accessible.',
+      description: 'Explorez mon parcours, mes réalisations vidéo, mes passions et mon Study Plan dans un terminal interactif accessible.',
       userPrompt: 'amyrath@studio-terminal:~$',
       interactiveMode: 'Mode Interactif',
       shortcutsLabel: 'Raccourcis :',
+      shortcutsList: ['cv', 'passions', 'projets', 'recherche', 'afrikedutech', 'contact', 'aide', 'effacer'],
       welcomeTitle: 'Studio Terminal · Amyrath CHAKRAN Folabi',
       welcomeMsg:
-        'Bienvenue dans la console interactive. Utilisez les boutons raccourcis ou tapez des commandes (ex : hobbies, videos, study-plan, contact).',
-      unknownCmd: 'Commande non reconnue. Tapez "help" pour voir la liste des commandes disponibles.',
-      hobbiesTitle: 'CENTRES D’INTÉRÊT & PARCOURS RÉEL :',
+        'Bienvenue dans la console interactive. Cliquez sur les raccourcis ci-dessus ou saisissez une commande (ex : passions, projets, recherche, afrikedutech, contact).',
+      unknownCmd: 'Commande non reconnue. Tapez "aide" pour afficher la liste des commandes disponibles.',
+      availableCmdsHeading: 'Commandes Disponibles :',
+      availableCmdsList: [
+        { cmd: 'cv', desc: 'Synthèse du parcours académique et consultation du CV (PDF)' },
+        { cmd: 'passions', desc: 'Centres d’intérêt réels (Réalisation, Sport & Course de fond, Danse)' },
+        { cmd: 'projets', desc: 'Les 2 projets vidéo avec liens de visionnage direct' },
+        { cmd: 'recherche', desc: 'Proposition de recherche Master ZJU (CivicLens, Diversité linguistique)' },
+        { cmd: 'afrikedutech', desc: 'Ateliers de robotique et inclusion numérique de terrain' },
+        { cmd: 'contact', desc: 'Coordonnées directes (Gmail, Epitech), LinkedIn & WhatsApp' },
+        { cmd: 'effacer', desc: 'Réinitialiser la console' },
+      ],
+      hobbiesTitle: 'PASSIONS & CENTRES D’INTÉRÊT :',
       hobbiesList: [
         {
-          title: '1. Réalisation et cadrage vidéo cinématographique',
+          title: '1. Réalisation & Cadrage Cinématographique',
           desc: 'Passion pour la composition visuelle, la lumière naturelle, le rythme du montage et la narration par l’image.',
         },
         {
-          title: '2. Engagement social et transmission',
-          desc: 'Formatrice bénévole chez AFRIKEDUTECH : transmission de la culture numérique, des e-services et de l’IA dans les zones rurales.',
-          linkText: 'Consulter le certificat officiel AFRIKEDUTECH ↗',
-          linkHref: '#engagement',
+          title: '2. Sports : Roller de vitesse & Course de fond',
+          desc: 'Ancienne athlète semi-pro de roller de vitesse et adepte de la course de fond : rigueur athlétique, endurance mentale, discipline et dépassement de soi.',
         },
         {
-          title: '3. Sport : Ancienne athlète semi-pro / compétitrice de roller de vitesse',
-          desc: 'Rigueur athlétique, endurance, discipline et dépassement de soi.',
-        },
-        {
-          title: '4. Danse & exploration musicale',
+          title: '3. Danse & Exploration Musicale',
           desc: 'Pratique de la danse, exploration des polyrythmies et sensibilité aux textures acoustiques appliquées au storytelling.',
         },
       ],
       videosTitle: 'LES DEUX PROJETS VIDÉO (LIENS CLIQUABLES) :',
-      contactTitle: 'COORDONNÉES DU CANDIDAT :',
+      contactTitle: 'COORDONNÉES DIRECTES DU CANDIDAT :',
       studyPlanSummaryTitle: 'Aperçu du Study Plan CivicLens :',
-      cvTitle: 'CURRICULUM VITAE (CV / RÉSUMÉ) :',
+      afrikedutechTitle: 'ROBOTIQUE ÉDUCATIVE & INCLUSION NUMÉRIQUE :',
+      afrikedutechRoleLabel: 'Rôle :',
+      exploreEngagementBtn: 'Découvrir les ateliers de terrain ↗',
+      cvTitle: 'CURRICULUM VITAE (CV) :',
       cvPillars: [
         { label: '1. Formation', text: 'Epitech Bénin (Bachelor IT Expertise, Tek 3).' },
         { label: '2. Réalisation & Création', text: 'Direction Artistique IA & Production Audiovisuelle Indépendante.' },
-        { label: '3. Engagement Social', text: 'AFRIKEDUTECH (Inclusion Numérique en Milieu Rural).' },
+        { label: '3. Engagement de Terrain', text: 'AFRIKEDUTECH (Formatrice Tech en Milieu Rural).' },
       ],
       cvDownloadLabel: '[ Consulter le document PDF ↗ ]',
     },
     footer: {
-      quote: '« Raconter par l\'image, concevoir avec empathie, rassembler par l\'interaction. »',
-      candidateBadge: 'ZJU CANDIDATE',
+      quote: '« Raconter par l’image, concevoir avec empathie, rassembler par l’interaction. »',
+      candidateBadge: 'CANDIDATE ZJU',
       footnote:
         "Amyrath CHAKRAN Folabi · Candidature Master en Communication & Médias · Université de Zhejiang (College of Media and International Culture)",
     },

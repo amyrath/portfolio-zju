@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDE8" />
+      <stop offset="50%" stop-color="#FFFDB6" />
+      <stop offset="100%" stop-color="#FFE7DC" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#470E0B" flood-opacity="0.1" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="450" fill="url(#bgGrad2)" rx="24" />
+  <rect x="16" y="16" width="568" height="418" fill="none" stroke="#470E0B" stroke-width="2" stroke-opacity="0.15" stroke-dasharray="8 6" rx="18" />
+
+  <!-- Playful Decorative Blobs -->
+  <circle cx="100" cy="360" r="55" fill="#FF8B71" opacity="0.15" />
+  <circle cx="510" cy="100" r="45" fill="#06B6D4" opacity="0.12" />
+  <circle cx="130" cy="120" r="30" fill="#FFFDE8" opacity="0.7" />
+
+  <!-- Center Card -->
+  <g transform="translate(300, 215)" filter="url(#shadow)" text-anchor="middle">
+    <!-- Icon Container -->
+    <circle cx="0" cy="-35" r="42" fill="#470E0B" />
+    <path d="M-18 -45 L-12 -53 L12 -53 L18 -45 L26 -45 C29 -45 31 -43 31 -40 L31 -20 C31 -17 29 -15 26 -15 L-26 -15 C-29 -15 -31 -17 -31 -20 L-31 -40 C-31 -43 -29 -45 -26 -45 Z" fill="#FFFDB6" />
+    <circle cx="0" cy="-30" r="11" fill="#FF8B71" />
+    <circle cx="0" cy="-30" r="7" fill="#470E0B" />
+    <circle cx="18" cy="-40" r="2.5" fill="#FFFDB6" />
+
+    <!-- Label -->
+    <text y="38" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="900" fill="#470E0B" letter-spacing="1">
+      AFRIKEDUTECH
+    </text>
+    <text y="64" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#FF8B71">
+      Pratique et manipulation technologique
+    </text>
+  </g>
+</svg>

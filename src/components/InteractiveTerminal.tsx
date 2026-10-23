@@ -33,17 +33,6 @@ export default function InteractiveTerminal() {
   const [history, setHistory] = useState<CommandOutput[]>([]);
   const terminalLogsRef = useRef<HTMLDivElement | null>(null);
 
-  const availableCommands = [
-    'cv',
-    'hobbies',
-    'videos',
-    'study-plan',
-    'afrikedutech',
-    'contact',
-    'help',
-    'clear',
-  ];
-
   const handleCommand = useCallback((cmdStr: string) => {
     const trimmed = cmdStr.trim().toLowerCase();
     const now = new Date().toLocaleTimeString(language === 'en' ? 'en-US' : 'fr-FR', {
@@ -52,7 +41,7 @@ export default function InteractiveTerminal() {
       second: '2-digit',
     });
 
-    if (trimmed === 'clear') {
+    if (trimmed === 'clear' || trimmed === 'effacer' || trimmed === 'cls' || trimmed === 'nettoyer') {
       setHistory([]);
       setInputVal('');
       return;
@@ -62,33 +51,20 @@ export default function InteractiveTerminal() {
 
     switch (trimmed) {
       case 'help':
+      case 'aide':
+      case 'commandes':
+      case '?':
         resultNode = (
           <div className="space-y-3 text-sm text-[#FFFDB6] leading-relaxed">
             <p className="text-[#FF8B71] font-bold text-base">
-              {language === 'en' ? 'Available Commands :' : 'Commandes Disponibles :'}
+              {terminalData.availableCmdsHeading}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm">
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">cv</span> : {language === 'en' ? 'Resume summary & PDF preview' : 'Synthèse du parcours & consultation PDF'}
-              </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">hobbies</span> : {language === 'en' ? 'Authentic passions (Directing, Speed skating, Dance, AFRIKEDUTECH)' : 'Centres d’intérêt réels (Réalisation, Sport, Danse, AFRIKEDUTECH)'}
-              </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">videos</span> : {language === 'en' ? 'Two video works with direct links' : 'Les 2 projets vidéo avec liens cliquables'}
-              </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">study-plan</span> : {language === 'en' ? 'ZJU Master proposal (CivicLens, Linguistic diversity)' : 'Proposition Master ZJU (CivicLens, Diversité linguistique)'}
-              </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">afrikedutech</span> : {language === 'en' ? 'Digital inclusion & official certificate' : 'Inclusion numérique & certificat officiel'}
-              </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">contact</span> : {language === 'en' ? 'Direct emails (Gmail, Epitech), LinkedIn & WhatsApp' : 'Emails directs (Gmail, Epitech), LinkedIn & WhatsApp'}
-              </div>
-              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                <span className="text-[#FF8B71] font-bold">clear</span> : {language === 'en' ? 'Clear console screen' : 'Réinitialiser la console'}
-              </div>
+              {terminalData.availableCmdsList.map((item, idx) => (
+                <div key={idx} className="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                  <span className="text-[#FF8B71] font-bold">{item.cmd}</span> : {item.desc}
+                </div>
+              ))}
             </div>
           </div>
         );
@@ -97,6 +73,7 @@ export default function InteractiveTerminal() {
       case 'cv':
       case 'resume':
       case 'curriculum':
+      case 'parcours':
         // Trigger in-app modal
         openCvModal();
         resultNode = (
@@ -135,8 +112,11 @@ export default function InteractiveTerminal() {
         break;
 
       case 'hobbies':
-      case 'interests':
       case 'passions':
+      case 'interets':
+      case 'loisirs':
+      case 'sport':
+      case 'sports':
         resultNode = (
           <div className="space-y-3 text-sm text-[#FFFDB6] leading-relaxed">
             <p className="text-[#FF8B71] font-bold text-base flex items-center gap-2">
@@ -171,7 +151,11 @@ export default function InteractiveTerminal() {
         break;
 
       case 'videos':
+      case 'projets':
+      case 'projet':
       case 'projects':
+      case 'realisations':
+      case 'films':
         resultNode = (
           <div className="space-y-3 text-sm text-[#FFFDB6] leading-relaxed">
             <p className="text-[#FF8B71] font-bold text-base flex items-center gap-2">
@@ -242,9 +226,12 @@ export default function InteractiveTerminal() {
         break;
 
       case 'study-plan':
+      case 'studyplan':
+      case 'recherche':
       case 'proposal':
       case 'zju':
       case 'civiclens':
+      case 'plan':
         resultNode = (
           <div className="space-y-3 text-sm text-[#FFFDB6] bg-[#350B08] p-5 rounded-2xl border border-white/15 leading-relaxed">
             <p className="text-[#FFFDB6] font-black text-base flex items-center gap-2">
@@ -273,29 +260,38 @@ export default function InteractiveTerminal() {
 
       case 'afrikedutech':
       case 'engagement':
+      case 'formation':
+      case 'robotique':
+      case 'tech-trainer':
         resultNode = (
-          <div className="space-y-2.5 text-sm text-[#FFFDB6] leading-relaxed bg-[#350B08] p-4 rounded-xl border border-white/15">
+          <div className="space-y-3 text-sm text-[#FFFDB6] leading-relaxed bg-[#350B08] p-5 rounded-2xl border border-white/15">
             <p className="text-[#FFFDB6] font-bold text-base flex items-center gap-2">
               <HeartHandshake className="w-4 h-4 text-[#FF8B71]" />
-              {t.afrikedutech.title}
+              {terminalData.afrikedutechTitle}
             </p>
             <p className="text-xs font-mono text-[#FFFDB6]/70">
               {t.afrikedutech.organization}
             </p>
             <p className="text-xs text-[#FF8B71] font-bold">
-              {language === 'en' ? 'Role :' : 'Rôle :'} {t.afrikedutech.role}
+              {terminalData.afrikedutechRoleLabel} {t.afrikedutech.role}
             </p>
-            <ul className="text-xs text-white space-y-1.5 pl-2">
+            <p className="text-xs text-white/90">
+              {t.afrikedutech.description}
+            </p>
+            <div className="space-y-1.5 pt-1">
               {t.afrikedutech.actions.map((act, idx) => (
-                <li key={idx}>• {act}</li>
+                <div key={idx} className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs">
+                  <span className="font-bold text-[#FF8B71]">• {act.title} : </span>
+                  <span className="text-[#FFFDB6]/90">{act.description}</span>
+                </div>
               ))}
-            </ul>
+            </div>
             <div className="pt-2 border-t border-white/10">
               <a
                 href="#engagement"
                 className="inline-flex items-center gap-1.5 text-xs text-[#FF8B71] hover:underline font-bold"
               >
-                <span>{t.afrikedutech.button}</span>
+                <span>{terminalData.exploreEngagementBtn}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -304,6 +300,9 @@ export default function InteractiveTerminal() {
         break;
 
       case 'contact':
+      case 'coordonnees':
+      case 'email':
+      case 'mail':
         resultNode = (
           <div className="space-y-3 text-sm text-[#FFFDB6] leading-relaxed bg-[#350B08] p-5 rounded-2xl border border-white/15">
             <p className="text-[#FF8B71] font-bold text-base flex items-center gap-2">
@@ -388,9 +387,9 @@ export default function InteractiveTerminal() {
             {terminalData.unknownCmd} ({language === 'en' ? 'typed' : 'saisi'} : &quot;{trimmed}&quot;).{' '}
             <span 
               className="underline cursor-pointer font-bold text-white hover:text-[#FF8B71]" 
-              onClick={() => handleCommand('help')}
+              onClick={() => handleCommand(language === 'en' ? 'help' : 'aide')}
             >
-              help
+              {language === 'en' ? 'help' : 'aide'}
             </span>
           </div>
         );
@@ -399,13 +398,13 @@ export default function InteractiveTerminal() {
     setHistory((prev) => [...prev, { command: cmdStr, output: resultNode, time: now }]);
     setInputVal('');
 
-    // Smooth scroll ONLY the internal terminal container, NOT the window viewport!
+    // Smooth scroll ONLY the internal terminal container, NOT the window viewport
     setTimeout(() => {
       if (terminalLogsRef.current) {
         terminalLogsRef.current.scrollTop = terminalLogsRef.current.scrollHeight;
       }
     }, 40);
-  }, [language, t, terminalData, contactData]);
+  }, [language, t, terminalData, contactData, openCvModal]);
 
   // Sync initial welcome message when language changes WITHOUT scrolling the page
   useEffect(() => {
@@ -417,7 +416,7 @@ export default function InteractiveTerminal() {
 
     setHistory([
       {
-        command: 'welcome',
+        command: language === 'en' ? 'welcome' : 'bienvenue',
         time: now,
         output: (
           <div className="space-y-2 text-[#FFFDB6] leading-relaxed">
@@ -474,12 +473,12 @@ export default function InteractiveTerminal() {
           </span>
         </div>
 
-        {/* Quick Action Buttons Bar */}
+        {/* Quick Action Buttons Bar with active language command names */}
         <div className="bg-[#3D0C09] dark:bg-[#220605] px-6 py-3 flex flex-wrap items-center gap-2 border-b border-white/5">
           <span className="text-[#FFFDB6]/60 text-xs font-bold uppercase tracking-wider mr-1">
             {terminalData.shortcutsLabel}
           </span>
-          {availableCommands.map((cmd) => (
+          {terminalData.shortcutsList.map((cmd) => (
             <button
               key={cmd}
               onClick={() => handleCommand(cmd)}
@@ -509,7 +508,7 @@ export default function InteractiveTerminal() {
           ))}
         </div>
 
-        {/* Terminal Input Line (NO autoFocus!) */}
+        {/* Terminal Input Line */}
         <div className="bg-[#350B08] dark:bg-[#1C0504] px-6 py-4 flex items-center gap-3 border-t border-white/10">
           <span className="text-cyan-400 font-black text-base">&gt;</span>
           <span className="text-[#FF8B71] font-bold text-base">~</span>
@@ -522,7 +521,7 @@ export default function InteractiveTerminal() {
                 handleCommand(inputVal);
               }
             }}
-            placeholder={language === 'en' ? 'Type hobbies, videos, study-plan, contact...' : 'Tapez hobbies, videos, study-plan, contact...'}
+            placeholder={language === 'en' ? 'Type hobbies, videos, study-plan, contact, help...' : 'Tapez passions, projets, recherche, contact, aide...'}
             className="flex-1 bg-transparent text-[#FFFDB6] focus:outline-none placeholder:text-[#FFFDB6]/35 text-sm sm:text-base font-mono"
             autoComplete="off"
             spellCheck="false"

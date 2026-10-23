@@ -4,14 +4,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   HeartHandshake, 
-  Award, 
-  CheckCircle2, 
-  X, 
-  ExternalLink,
-  Laptop,
-  Globe,
-  Cpu,
-  FileCheck
+  Bot, 
+  Laptop, 
+  Cpu, 
+  Sparkles, 
+  Maximize2, 
+  X,
+  Camera
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { TRANSLATIONS } from '@/data/translations';
@@ -21,21 +20,28 @@ export default function EngagementAfrikeductek() {
   const t = TRANSLATIONS[language];
   const data = t.afrikedutech;
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [activePhoto, setActivePhoto] = useState<typeof data.photos[0] | null>(null);
+  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
+
+  const handleImageError = (id: string) => {
+    setImgErrors((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const actionIcons = [Bot, Laptop, Cpu];
 
   return (
     <section 
       id="engagement" 
       className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24"
     >
-      {/* Background Soft Glow */}
+      {/* Background Soft Ambient Glow */}
       <div className="absolute top-1/2 left-1/3 w-80 h-80 rounded-full bg-[#FF8B71]/10 blur-3xl pointer-events-none" />
 
-      {/* Main Engagement Card */}
-      <div className="p-8 sm:p-12 md:p-14 rounded-[3rem] bg-[#FFFDE8] dark:bg-[#360B08] border-3 border-[#470E0B]/15 dark:border-[#FFFDB6]/15 soft-card-shadow relative overflow-hidden transition-colors duration-300">
+      {/* Main Engagement Container */}
+      <div className="p-8 sm:p-12 md:p-14 rounded-[3rem] bg-[#FFFDE8] dark:bg-[#360B08] border-3 border-[#470E0B]/15 dark:border-[#FFFDB6]/15 soft-card-shadow relative overflow-hidden transition-colors duration-300 space-y-12">
         
-        {/* Header Tag with a discreet pinch of cyan status dot */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        {/* Header Tag with a discreet cyan status dot */}
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFFDB6] dark:bg-[#250705] border border-[#470E0B]/15 dark:border-[#FFFDB6]/15 text-[#470E0B] dark:text-[#FFFDB6] text-xs font-black font-mono">
             <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
             <HeartHandshake className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -43,191 +49,163 @@ export default function EngagementAfrikeductek() {
           </div>
 
           <div className="flex items-center gap-2 text-xs font-bold text-[#470E0B]/70 dark:text-[#FFFDB6]/70 font-mono">
-            <Award className="w-4 h-4 text-[#FF8B71]" />
+            <Sparkles className="w-4 h-4 text-[#FF8B71]" />
             <span>{data.badgeText}</span>
           </div>
         </div>
 
-        {/* Content Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          
-          {/* Left: Presentation */}
-          <div className="lg:col-span-7 space-y-6">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-black text-[#470E0B] dark:text-[#FFFDB6] tracking-tight leading-tight mb-2">
-                {data.title}
-              </h2>
-              <p className="text-sm sm:text-base font-bold text-[#FF8B71] font-mono">
-                {language === 'en' ? 'Role :' : 'Rôle :'} {data.role}
-              </p>
-              <p className="text-xs font-semibold text-[#470E0B]/60 dark:text-[#FFFDB6]/60 font-mono mt-0.5">
-                {data.organization}
-              </p>
+        {/* Narrative & Experience Overview */}
+        <div className="space-y-6 max-w-4xl">
+          <div>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#470E0B] dark:text-[#FFFDB6] tracking-tight leading-tight mb-3">
+              {data.title}
+            </h2>
+            <div className="inline-block px-3.5 py-1 rounded-xl bg-[#FFFDB6] dark:bg-[#250705] border border-[#FF8B71]/40 text-[#FF8B71] text-xs sm:text-sm font-bold font-mono">
+              {data.role}
             </div>
-
-            <p className="text-base text-[#470E0B]/85 dark:text-[#FFFDB6]/85 leading-relaxed font-medium">
-              {data.description}
+            <p className="text-xs font-mono text-[#470E0B]/60 dark:text-[#FFFDB6]/60 mt-2">
+              {data.organization}
             </p>
+          </div>
 
-            {/* Actions Reelles Grid */}
-            <div className="space-y-3 pt-2">
-              <span className="text-xs font-mono font-bold text-[#470E0B]/70 dark:text-[#FFFDB6]/70 uppercase tracking-wider block">
-                {data.actionsHeading}
-              </span>
-              {data.actions.map((action, idx) => (
+          <p className="text-base sm:text-lg text-[#470E0B]/85 dark:text-[#FFFDB6]/85 leading-relaxed font-medium">
+            {data.description}
+          </p>
+        </div>
+
+        {/* 3 Concrete Field Action Cards */}
+        <div>
+          <span className="text-xs font-mono font-bold text-[#470E0B]/70 dark:text-[#FFFDB6]/70 uppercase tracking-wider block mb-4">
+            {data.actionsHeading}
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {data.actions.map((action, idx) => {
+              const IconComp = actionIcons[idx] || Bot;
+              return (
                 <div 
                   key={idx} 
-                  className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#FFFDB6] dark:bg-[#250705] border border-[#470E0B]/10 dark:border-[#FFFDB6]/10 transition-colors"
+                  className="p-5 rounded-2xl bg-[#FFFDB6] dark:bg-[#250705] border-2 border-[#470E0B]/10 dark:border-[#FFFDB6]/10 space-y-3 transition-all hover:border-[#FF8B71] hover:-translate-y-0.5"
                 >
-                  <div className="w-6 h-6 rounded-full bg-[#FFFDE8] dark:bg-[#360B08] border border-[#470E0B]/15 dark:border-[#FFFDB6]/15 flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-10 h-10 rounded-xl bg-[#FFFDE8] dark:bg-[#360B08] border border-[#470E0B]/15 dark:border-[#FFFDB6]/15 flex items-center justify-center shrink-0">
+                    <IconComp className="w-5 h-5 text-[#FF8B71]" />
                   </div>
-                  <span className="text-sm font-semibold text-[#470E0B]/90 dark:text-[#FFFDB6]/90 leading-snug">
-                    {action}
-                  </span>
+                  <div>
+                    <h3 className="text-sm font-black text-[#470E0B] dark:text-[#FFFDB6] leading-snug">
+                      {action.title}
+                    </h3>
+                    <p className="text-xs text-[#470E0B]/80 dark:text-[#FFFDB6]/80 mt-1.5 leading-relaxed font-medium">
+                      {action.description}
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Interactive Certificate Trigger Button */}
-            <div className="pt-4 flex flex-wrap gap-4 items-center">
-              <button
-                type="button"
-                onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#470E0B] text-[#FFFDB6] dark:bg-[#FFFDB6] dark:text-[#470E0B] hover:opacity-90 font-bold text-sm transition-all soft-card-shadow hover:scale-105 active:scale-95 cursor-pointer"
-              >
-                <Award className="w-4 h-4 text-[#FF8B71]" />
-                <span>{data.button}</span>
-              </button>
-
-              <span className="text-xs font-mono font-bold text-[#470E0B]/60 dark:text-[#FFFDB6]/60">
-                {language === 'en' ? 'Official volunteer certificate' : 'Attestation officielle d’engagement bénévole'}
-              </span>
-            </div>
+              );
+            })}
           </div>
+        </div>
 
-          {/* Right: Visual Certificate Snapshot Box */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div 
-              onClick={() => setModalOpen(true)}
-              className="w-full max-w-sm p-6 rounded-[2.5rem] bg-[#FFFDB6] dark:bg-[#250705] border-3 border-[#470E0B]/15 dark:border-[#FFFDB6]/15 soft-card-shadow hover:border-[#FF8B71] transition-all cursor-pointer group hover:-translate-y-1"
-            >
-              <div className="p-6 rounded-2xl bg-[#FFFDE8] dark:bg-[#360B08] border-2 border-[#470E0B]/10 dark:border-[#FFFDB6]/10 space-y-4 text-center">
-                <div className="w-14 h-14 rounded-full bg-[#FFFDB6] dark:bg-[#250705] border-2 border-[#470E0B]/15 dark:border-[#FFFDB6]/15 flex items-center justify-center mx-auto shadow-md group-hover:scale-110 transition-transform">
-                  <FileCheck className="w-7 h-7 text-[#FF8B71]" />
-                </div>
-                
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono font-bold text-[#470E0B]/60 dark:text-[#FFFDB6]/60 uppercase tracking-widest block">
-                    {language === 'en' ? 'Official Attestation' : 'Attestation Officielle'}
-                  </span>
-                  <h4 className="text-base font-black text-[#470E0B] dark:text-[#FFFDB6]">
-                    {data.modal.certTitle}
-                  </h4>
-                  <p className="text-xs text-[#470E0B]/75 dark:text-[#FFFDB6]/75 font-semibold">
-                    AFRIKEDUTECH · {language === 'en' ? 'Digital Inclusion' : 'Inclusion Numérique'}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-[#470E0B]/10 dark:border-[#FFFDB6]/10 text-xs font-bold text-[#FF8B71] flex items-center justify-center gap-1 group-hover:underline">
-                  <span>{data.button}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </div>
+        {/* Personal Field Photos Gallery (3 Neutral Photo Slots) */}
+        <div className="pt-4 border-t border-[#470E0B]/10 dark:border-[#FFFDB6]/10 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#FF8B71] uppercase tracking-wider">
+                <Camera className="w-3.5 h-3.5" />
+                <span>{data.galleryHeading}</span>
               </div>
+              <h3 className="text-xl sm:text-2xl font-black text-[#470E0B] dark:text-[#FFFDB6] mt-1">
+                {data.galleryTitle}
+              </h3>
             </div>
+            <p className="text-xs sm:text-sm text-[#470E0B]/75 dark:text-[#FFFDB6]/75 font-medium max-w-lg">
+              {data.gallerySubtitle}
+            </p>
           </div>
 
+          {/* 3-Photo Responsive Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {data.photos.map((item, idx) => {
+              const hasError = imgErrors[item.id];
+              const displaySrc = hasError ? `/photo-terrain-${idx + 1}.svg` : item.imageSrc;
+
+              // Framing adjustments tailored to the content of each authentic photo
+              const objectPos = idx === 1 ? 'object-[center_18%]' : idx === 2 ? 'object-[center_35%]' : 'object-[center_25%]';
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setActivePhoto(item)}
+                  className="group relative rounded-3xl overflow-hidden bg-[#FFFDB6] dark:bg-[#250705] border-2 border-[#470E0B]/15 dark:border-[#FFFDB6]/15 soft-card-shadow cursor-pointer transition-all duration-300 hover:border-[#FF8B71] hover:-translate-y-1"
+                >
+                  {/* Photo Frame with balanced aspect-[4/5] ratio */}
+                  <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#FFFDE8] dark:bg-[#360B08]">
+                    <img
+                      src={displaySrc}
+                      alt={item.alt}
+                      onError={() => handleImageError(item.id)}
+                      className={`w-full h-full object-cover ${objectPos} transition-transform duration-700 group-hover:scale-105`}
+                      loading="lazy"
+                    />
+
+                    {/* Subtle Expand Indicator on Hover */}
+                    <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
+                      <Maximize2 className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
       </div>
 
-      {/* Interactive Certificate Modal */}
+      {/* Lightbox Modal when clicking a gallery photo */}
       <AnimatePresence>
-        {modalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        {activePhoto && (
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+            onClick={() => setActivePhoto(null)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-[#FFFDE8] dark:bg-[#360B08] text-[#470E0B] dark:text-[#FFFDB6] rounded-[2.5rem] border-4 border-[#470E0B]/20 dark:border-[#FFFDB6]/20 soft-card-shadow p-6 sm:p-8 overflow-hidden transition-colors"
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl max-h-[92vh] bg-[#FFFDE8] dark:bg-[#360B08] text-[#470E0B] dark:text-[#FFFDB6] rounded-[2.5rem] border-3 border-[#470E0B]/20 dark:border-[#FFFDB6]/20 soft-card-shadow overflow-hidden shadow-2xl flex flex-col"
             >
               {/* Close Button */}
               <button
                 type="button"
-                onClick={() => setModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-[#470E0B] text-[#FFFDB6] dark:bg-[#FFFDB6] dark:text-[#470E0B] hover:opacity-90 transition-opacity cursor-pointer"
+                onClick={() => setActivePhoto(null)}
+                className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-black/65 text-white hover:bg-black/85 transition-colors cursor-pointer"
                 aria-label="Close"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
 
-              {/* Modal Body: Official Certificate Layout */}
-              <div className="border-3 border-dashed border-[#470E0B]/20 dark:border-[#FFFDB6]/20 p-6 sm:p-8 rounded-3xl space-y-5 bg-[#FFFDB6]/50 dark:bg-[#250705]/50">
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#FFFDE8] dark:bg-[#360B08] border-2 border-[#470E0B]/20 dark:border-[#FFFDB6]/20 flex items-center justify-center shadow-md shrink-0">
-                    <Award className="w-6 h-6 text-[#FF8B71]" />
-                  </div>
-                  <div className="text-left">
-                    <span className="text-[10px] font-mono font-bold text-[#470E0B]/60 dark:text-[#FFFDB6]/60 uppercase tracking-widest block">
-                      {data.modal.orgHeader}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-black text-[#470E0B] dark:text-[#FFFDB6]">
-                      {data.modal.certTitle}
-                    </h3>
-                  </div>
-                </div>
+              {/* Full Image in Native Aspect Ratio */}
+              <div className="relative flex-1 w-full bg-black/10 dark:bg-black/50 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+                <img
+                  src={imgErrors[activePhoto.id] ? `/${activePhoto.fileName.replace('.jpg', '.svg')}` : activePhoto.imageSrc}
+                  alt={activePhoto.alt}
+                  className="max-h-[72vh] w-auto max-w-full object-contain rounded-2xl"
+                />
+              </div>
 
-                <div className="p-4 rounded-2xl bg-white dark:bg-[#220605] border border-[#470E0B]/10 dark:border-[#FFFDB6]/10 space-y-2 text-center">
-                  <p className="text-xs font-mono font-semibold text-[#470E0B]/70 dark:text-[#FFFDB6]/70">
-                    {data.modal.awardedTo}
-                  </p>
-                  <p className="text-xl font-black text-[#470E0B] dark:text-[#FFFDB6]">
-                    Amyrath CHAKRAN Folabi
-                  </p>
-                  <p className="text-xs font-mono font-bold text-[#FF8B71]">
-                    {data.modal.recipientRole}
-                  </p>
-                </div>
-
-                <div className="space-y-2 text-xs sm:text-sm text-[#470E0B]/85 dark:text-[#FFFDB6]/85 font-medium leading-relaxed">
-                  <p className="font-bold text-[#470E0B] dark:text-[#FFFDB6]">
-                    {data.modal.workshopIntro}
-                  </p>
-                  <ul className="space-y-1.5 pl-2">
-                    <li className="flex items-center gap-2">
-                      <Laptop className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{language === 'en' ? 'Introduction to computer tools and web information retrieval.' : 'Initiation aux outils informatiques et à la recherche documentaire sur le web.'}</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Globe className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                      <span>{language === 'en' ? 'Discovery of e-services (public services and administrative online procedures).' : 'Découverte des e-services (services publics et démarches administratives en ligne).'}</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Cpu className="w-3.5 h-3.5 text-[#FF8B71] shrink-0" />
-                      <span>{language === 'en' ? 'Practical introduction to Artificial Intelligence tools and educational robotics.' : 'Introduction pratique aux outils d’Intelligence Artificielle et robotique éducative.'}</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-4 border-t border-[#470E0B]/10 dark:border-[#FFFDB6]/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono font-bold text-[#470E0B]/70 dark:text-[#FFFDB6]/70">
-                  <span>{language === 'en' ? 'Issuing Organization: AFRIKEDUTECH' : 'Entité émettrice : AFRIKEDUTECH'}</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    {data.modal.verificationTag}
+              {/* Clean Footer Bar */}
+              <div className="p-4 sm:p-5 flex items-center justify-between border-t border-[#470E0B]/10 dark:border-[#FFFDB6]/10 shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs sm:text-sm font-bold text-[#470E0B] dark:text-[#FFFDB6]">
+                    AFRIKEDUTECH
+                  </span>
+                  <span className="text-xs text-[#470E0B]/60 dark:text-[#FFFDB6]/60">·</span>
+                  <span className="text-xs text-[#FF8B71] font-semibold">
+                    {language === 'en' ? 'Field Immersion' : 'Immersion sur le terrain'}
                   </span>
                 </div>
+                <p className="text-xs font-mono text-[#470E0B]/60 dark:text-[#FFFDB6]/60">
+                  {language === 'en' ? 'Click outside to close' : 'Cliquer pour fermer'}
+                </p>
               </div>
-
-              <div className="mt-6 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(false)}
-                  className="px-6 py-2.5 rounded-full bg-[#470E0B] text-[#FFFDB6] dark:bg-[#FFFDB6] dark:text-[#470E0B] font-bold text-xs hover:opacity-90 transition-opacity cursor-pointer"
-                >
-                  {data.modal.closeBtn}
-                </button>
-              </div>
-
             </motion.div>
           </div>
         )}

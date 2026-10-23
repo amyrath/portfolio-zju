@@ -47,18 +47,16 @@ export const VIDEO_PROJECTS: VideoProject[] = [
 ];
 
 export const ENGAGEMENT_AFRIKEDUTECH = {
-  title: 'Formation & Inclusion Numérique : AFRIKEDUTECH',
+  title: 'Formation & Transmission Technologique : AFRIKEDUTECH',
   organization: 'AFRIKEDUTECH (Organisation d’innovation sociale pour l’inclusion numérique au Bénin)',
-  role: 'Formatrice bénévole en inclusion numérique & technologies',
+  role: 'Formatrice Tech bénévole · Robotique éducative & Outils numériques',
   description:
-    'Animation d’ateliers pratiques ouverts à l’ensemble des jeunes et communautés des zones rurales pour favoriser l’autonomie numérique et l’accès équitable aux opportunités technologiques.',
+    'Animation d’ateliers pratiques de terrain auprès des jeunes et communautés des zones rurales au Bénin : robotique éducative, appropriation des outils numériques et éveil aux opportunités technologiques.',
   actions: [
-    'Initiation aux outils informatiques et à la recherche documentaire sur le web.',
-    'Découverte des e-services (services publics et démarches en ligne).',
-    'Introduction pratique aux outils d’Intelligence Artificielle et robotique éducative.',
+    'Ateliers pratiques de robotique éducative et logique algorithmique.',
+    'Initiation aux outils informatiques et à la recherche web.',
+    'Appropriation des démarches administratives et e-services en ligne.',
   ],
-  certificateTitle: 'Certificat Officiel d’Engagement : AFRIKEDUTECH',
-  certificateStatus: 'Certificat officiel d’engagement bénévole validé',
 };
 
 // Alias de compatibilité pour éviter tout conflit de cache ou d'import résiduel
@@ -116,12 +114,8 @@ export const HOBBIES_DATA = [
     description: 'Passion pour la composition visuelle, la lumière naturelle, le rythme du montage et la narration par l’image.',
   },
   {
-    title: 'Engagement Social & Transmission',
-    description: 'Formatrice bénévole chez AFRIKEDUTECH : transmission de la culture numérique, des e-services et de l’IA dans les zones rurales.',
-  },
-  {
-    title: 'Sport : Roller de Vitesse',
-    description: 'Ancienne athlète semi-pro / compétitrice de roller de vitesse : rigueur athlétique, endurance, discipline et dépassement de soi.',
+    title: 'Sports : Roller de Vitesse & Course de Fond',
+    description: 'Ancienne athlète semi-pro de roller de vitesse et adepte de la course de fond : rigueur athlétique, endurance mentale, discipline et dépassement de soi.',
   },
   {
     title: 'Danse & Exploration Musicale',

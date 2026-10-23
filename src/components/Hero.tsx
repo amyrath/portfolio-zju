@@ -76,19 +76,19 @@ export default function Hero() {
           </div>
 
           {/* Dynamic Interactive Bouncing Title */}
-          {/* PURPLE RULE: ONLY the word "Visual" receives #8B5CF6! */}
+          {/* PURPLE RULE: ONLY the word "Visual" / "Visuelle" receives #8B5CF6! */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-[#470E0B] dark:text-[#FFFDB6] tracking-tight leading-[1.06] flex flex-wrap justify-center lg:justify-start gap-x-3.5 gap-y-1">
             {t.hero.titleWords.map((item, idx) => {
-              // Accent rule: "Technologist" is Peach #FF8B71, "Visual" is the ONLY Purple #8B5CF6
+              // Accent rule: "Technologist" or "Technologie" is Peach #FF8B71, "Visual" or "Visuelle" is Purple #8B5CF6
               let wordColor = undefined;
               let customStyle: React.CSSProperties = {};
-              if (item.text === 'Technologist') wordColor = '#FF8B71';
-              if (item.isAccent) wordColor = '#8B5CF6';
+              if (item.isPeach || item.text === 'Technologist' || item.text === 'Technologie') wordColor = '#FF8B71';
+              if (item.isAccent || item.text === 'Visual' || item.text === 'Visuelle') wordColor = '#8B5CF6';
               if (wordColor) customStyle.color = wordColor;
 
               return (
                 <motion.span
-                  key={idx}
+                  key={`${language}-${idx}-${item.text}`}
                   initial={{ opacity: 0, y: 25 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -250,6 +250,34 @@ export default function Hero() {
           </motion.div>
         </div>
 
+      </div>
+
+      {/* Dynamic Bilingual Infinite Scrolling Marquee / Texte Défilant */}
+      <div className="w-full mt-14 pt-4 border-t-2 border-[#470E0B]/10 dark:border-[#FFFDB6]/10 overflow-hidden">
+        <div className="relative w-full flex overflow-x-hidden">
+          <motion.div
+            key={language}
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="flex items-center gap-6 whitespace-nowrap will-change-transform"
+          >
+            {[...t.ticker, ...t.ticker, ...t.ticker, ...t.ticker].map((item, idx) => (
+              <span
+                key={idx}
+                className="inline-flex items-center gap-3 text-xs sm:text-sm font-black font-mono tracking-widest text-[#470E0B]/75 dark:text-[#FFFDB6]/75 uppercase"
+              >
+                <span className="text-[#FF8B71]">✦</span>
+                <span className={item.includes('VISUEL') || item.includes('VISUAL') ? 'text-[#8B5CF6]' : ''}>
+                  {item}
+                </span>
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
     </section>
